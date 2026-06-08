@@ -6,6 +6,8 @@ import com.main.Ecommerce.dto.ProductDto;
 import com.main.Ecommerce.dto.ProductRequest;
 import com.main.Ecommerce.service.impl.ProductServiceImpl;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +53,7 @@ public class ProductController {
      *  To add new product
      */
     @PostMapping("/product")
-    public ResponseEntity<ProductRequest> addProduct(@RequestBody ProductRequest product) {
+    public ResponseEntity<ProductRequest> addProduct(@RequestBody @Valid ProductRequest product) {
         return ResponseEntity.ok(productService.addProduct(product));
     }
 
