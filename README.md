@@ -84,7 +84,7 @@ spring.jpa.show-sql=true
 ### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/PrimeCart.git
+git clone https://github.com/Sandeep-Kushwah/PrimeCart.git
 ```
 
 ### Navigate to Project
