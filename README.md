@@ -73,8 +73,9 @@ spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_db
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+cloudinary.cloud-name = YOUR_CLOUDINARY_CLOUD_NAME
+cloudinary.api-key = YOUR_CLOUDINARY_API_KEY
+cloudinary.api-secret = YOUR_CLOUDINARY_API_SECRET
 ```
 
 ---
@@ -115,40 +116,50 @@ http://localhost:8080
 
 ## 📦 Product API Endpoints
 
-| Method | Endpoint            | Description                  |
-| ------ | ------------------- | ---------------------------- |
-| GET    | `/api/product`      | Retrieve all products        |
-| GET    | `/api/product/{id}` | Retrieve a product by its ID |
-| POST   | `/api/product`      | Create a new product         |
-| PUT    | `/api/product`      | Update an existing product   |
-| DELETE | `/api/product/{id}` | Delete a product by its ID   |
+| Method | Endpoint            | Description                     |
+| ------ | ------------------- | ----------------------------    |
+| GET    | `/api/product`      | Retrieve all products           |
+| GET    | `/api/product/{id}` | Retrieve a product by its ID    |
+| POST   | `/api/product`      | Create a new product            |
+| PUT    | `/api/product`      | Update existing product details |
+| PUT    | `/api/product/{id}` | Update existing product image   |
+| DELETE | `/api/product/{id}` | Delete a product by its ID      |
 
 ### Example Product Object
 
-| Field       | Type    | Description                                     |
-| ----------- | ------- | ----------------------------------------------- |
-| id          | Long    | Unique product identifier                       |
-| name        | String  | Product name                                    |
-| description | String  | Product description                             |
-| price       | Double  | Product price                                   |
-| imageUrl    | String  | Product image URL (currently for demo purposes) |
+| Field         | Type    | Description                                     |
+| -----------   | ------- | ----------------------------------------------- |
+| id            | Long    | Unique product identifier                       |
+| name          | String  | Product name                                    |
+| description   | String  | Product description                             |
+| brand         | String  | Product brand                                   |
+| price         | long    | Product price                                   |
+| discountPrice | long    | Product discount price                          |
+| imageUrl      | String  | Product image URL                               |
+| status        | Status  | Product status                                  |
+| localDateTime | Local.  | Product creation Date and Time                  |
 
 ### 📄 Sample Product JSON
 
 ```json
 {
-  "id": 7,
-  "name": "iPhone",
-  "description": "This is an iPhone 18 Pro Max from California",
-  "price": 150000,
-  "imageUrl": "iPhone img"
+  "id": 16,
+  "name": "iPhone 18 PRO MAX",
+  "description": "This is highly build quality product",
+  "brand": "iPhone",
+  "price": 155000,
+  "discountPrice": 149999,
+  "imageUrl": "http://res.cloudinary.com/dlpa9gzwn/image/upload/v1781519397/tznxlaqhtdkh4dl5hxhg.jpg",
+  "status": "ACTIVE",
+  "localDateTime": "2026-06-15T15:52:03.671592"
 }
 ```
 
 
 ---
 
-> Currently, `imageUrl` is used only for demonstration purposes. Cloudinary integration will be added in future releases.
+The JSON structure may vary.
+Don't worry about the JSON field order.
 
 ---
 
@@ -204,12 +215,15 @@ src
 ├── main
 │   ├── java
 │   │   └── com.example.primecart
+│   │       ├── config
 │   │       ├── controller
 │   │       ├── dto
 │   │       ├── entities
+│   │       ├── enums
 │   │       ├── mapper
 │   │       ├── repo
 │   │       └── service
+│   │           └── serviceImpl
 |   |
 │   └── resources
 │       └── application.properties
