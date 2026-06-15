@@ -64,6 +64,15 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- cloudinary-http44 dependency -->
+		<dependency>
+    		<groupId>com.cloudinary</groupId>
+    		<artifactId>cloudinary-http44</artifactId>
+    		<version>1.39.0</version>
+    		<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
