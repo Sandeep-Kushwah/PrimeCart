@@ -4,22 +4,24 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.main.Ecommerce.dto.ProductDto;
-import com.main.Ecommerce.dto.ProductRequest;
+import com.main.Ecommerce.dto.ProductRequestDto;
 import com.main.Ecommerce.entities.Product;
 import com.main.Ecommerce.mapper.ProductMapper;
 import com.main.Ecommerce.repo.ProductRepo;
+import com.main.Ecommerce.service.CloudinaryService;
 import com.main.Ecommerce.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepo productRepo;
+    final ProductRepo productRepo;
+    final CloudinaryService cloudinaryService;
 
     /**
      * To get single product through product ID
@@ -47,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     /**
      * To add new product
      */
-    public ProductRequest addProduct(ProductRequest product) {
+    public ProductRequestDto addProduct(ProductRequestDto product) {
         try {
             Product returnProduct = productRepo.save(ProductMapper.toDto(product));
             return ProductMapper.toProductRequest(returnProduct);
@@ -64,7 +66,10 @@ public class ProductServiceImpl implements ProductService {
             ProductDto updatingProduct = getProductById(product.getId());
             updatingProduct.setName(product.getName());
             updatingProduct.setDescription(product.getDescription());
+            updatingProduct.setBrand(product.getBrand());
             updatingProduct.setPrice(product.getPrice());
+            updatingProduct.setDiscountPrice(product.getDiscountPrice());
+            updatingProduct.setStatus(product.getStatus());
             updatingProduct.setImageUrl(product.getImageUrl());
 
             Product product2 = productRepo.save(ProductMapper.toProduct(updatingProduct));
@@ -72,6 +77,20 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    // To update product image
+    public ProductDto updateProductImage(long id, MultipartFile file) {
+
+        String url = cloudinaryService.upload(file);
+        
+        Optional<Product> optionalProduct = productRepo.findById(id);
+
+        // Throws an exception if the product is missing
+        Product product = optionalProduct.orElseThrow();
+        product.setProductImageUrl(url);
+
+        return ProductMapper.toDto(productRepo.save(product));
     }
 
     /**

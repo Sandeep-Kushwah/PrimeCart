@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.main.Ecommerce.dto.ProductDto;
-import com.main.Ecommerce.dto.ProductRequest;
+import com.main.Ecommerce.dto.ProductRequestDto;
 import com.main.Ecommerce.entities.Product;
 
 public class ProductMapper {
@@ -17,21 +17,29 @@ public class ProductMapper {
                 .id(product.getProductId())
                 .name(product.getProductName())
                 .description(product.getProductDescription())
+                .brand(product.getProductBrand())
                 .price(product.getProductPrice())
+                .discountPrice(product.getProductDiscountPrice())
                 .imageUrl(product.getProductImageUrl())
+                .status(product.getProductStatus())
+                .localDateTime(product.getLocalDateTime())
                 .build();
     }
 
     /**
-     * To convert Product object into ProductDto object. 
+     * To convert ProductDto object into Product object. 
      */ 
     public static Product toProduct(ProductDto product){
         return Product.builder()
                 .productId(product.getId())
                 .productName(product.getName())
                 .productDescription(product.getDescription())
+                .productBrand(product.getBrand())
                 .productPrice(product.getPrice())
+                .productDiscountPrice(product.getDiscountPrice())
                 .productImageUrl(product.getImageUrl())
+                .productStatus(product.getStatus())
+                .localDateTime(product.getLocalDateTime())
                 .build();
     }
 
@@ -49,8 +57,12 @@ public class ProductMapper {
                 .id(product.getProductId())
                 .name(product.getProductName())
                 .description(product.getProductDescription())
+                .brand(product.getProductBrand())
                 .price(product.getProductPrice())
+                .discountPrice(product.getProductDiscountPrice())
                 .imageUrl(product.getProductImageUrl())
+                .status(product.getProductStatus())
+                .localDateTime(product.getLocalDateTime())
                 .build()
             );
         }
@@ -60,11 +72,13 @@ public class ProductMapper {
     /**
      * To convert ProductRequest into Product Object
      */ 
-    public static Product toDto(ProductRequest productRequest){
+    public static Product toDto(ProductRequestDto productRequest){
         return Product.builder()
                 .productName(productRequest.getName())
                 .productDescription(productRequest.getDescription())
+                .productBrand(productRequest.getBrand())
                 .productPrice(productRequest.getPrice())
+                .productDiscountPrice(productRequest.getDiscountPrice())
                 .productImageUrl(productRequest.getImageUrl())
                 .build();
     }
@@ -72,11 +86,13 @@ public class ProductMapper {
     /**
      * To convert Product into ProductRequest Object
      */ 
-    public static ProductRequest  toProductRequest(Product product){
-        return ProductRequest.builder()
+    public static ProductRequestDto  toProductRequest(Product product){
+        return ProductRequestDto.builder()
                 .name(product.getProductName())
                 .description(product.getProductDescription())
+                .brand(product.getProductBrand())
                 .price(product.getProductPrice())
+                .discountPrice(product.getProductDiscountPrice())
                 .imageUrl(product.getProductImageUrl())
                 .build();
     }

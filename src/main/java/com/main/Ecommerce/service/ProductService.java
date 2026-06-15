@@ -2,9 +2,10 @@ package com.main.Ecommerce.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.main.Ecommerce.dto.ProductDto;
-import com.main.Ecommerce.dto.ProductRequest;
+import com.main.Ecommerce.dto.ProductRequestDto;
 
 @Service
 public interface ProductService {
@@ -22,12 +23,17 @@ public interface ProductService {
     /**
      * To add a new Product
      */
-    public ProductRequest addProduct(ProductRequest product);
+    public ProductRequestDto addProduct(ProductRequestDto product);
     
     /** 
      * To update an existing product
      */
     public ProductDto updateProduct(ProductDto product);
+
+    /**
+     * To update image of a product with the help of product ID
+     */
+    public ProductDto updateProductImage(long id, MultipartFile file);
     
     /** 
      * To delete an product
